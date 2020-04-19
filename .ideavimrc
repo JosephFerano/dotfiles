@@ -1,0 +1,127 @@
+let mapleader = " "
+set incsearch
+set hlsearch
+set clipboard+=unnamed
+set number
+set relativenumber
+set surround
+set multiple-cursors
+set ideajoin
+set idearefactormode=visual
+set ignorecase
+set commentary
+
+" TODO Find bindings for these
+" nnoremap <Leader>rc :action ChooseRcnConfiguration<CR>
+" nnoremap ;b :action ToggleLineBreakpoint<CR>
+" nnoremap ;e :action EvaluateExpression<CR>
+" nnoremap ;d :action Debug<CR>
+" nnoremap ;r :action Resume<CR>
+" nnoremap ;s :action StepInto<CR>
+" nnoremap ;n :action StepOver<CR>
+" nmap :action<Up><CR> **** Repeat last command
+" Find out about VCS tool
+" We need to get good bindings for window navigation
+
+" IDE has nice search behavior, consider adding these
+" map / :action Find<CR>
+" nnoremap n :action FindNext<CR>
+" nnoremap N :action FindPrevious<CR>
+" vnoremap n :action FindNext<CR>
+" vnoremap N :action FindPrevious<CR>
+" nnoremap * :action FindWordAtCaret<CR>
+" nnoremap # :action FindWordAtCaret<CR>
+
+nnoremap <Leader>f :action FindInPath<CR>
+
+nnoremap <C-=> :action EditorIncreaseFontSize<CR>
+nnoremap <C--> :action EditorDecreaseFontSize<CR>
+nnoremap <C-0> :action EditorResetFontSize<CR>
+
+nnoremap ) :action MethodDown<CR>
+nnoremap ( :action MethodUp<CR>
+
+nnoremap \ q
+nnoremap q :action KJumpAction.Word0<CR>
+
+noremap <Leader>rl :source ~/.ideavimrc<CR>
+noremap <Leader>i :e C:/Users/josep/.ideavimrc<CR>
+
+nnoremap <C-p>p :action SearchEverywhere<CR>
+nnoremap <C-p>c :action GotoClass<CR>
+nnoremap <C-p>t :action FileStructurePopup<CR>
+nnoremap <C-p>f :action GotoFile<CR>
+nnoremap <C-p>r :action RecentFiles<CR>
+nnoremap <C-p>u :action GotoTest<CR>
+
+nnoremap zd :action CollapseDocComments<CR>
+nnoremap zD :action ExpandDocComments<CR>
+
+nnoremap <C-w>H :action MoveEditorToOppositeTabGroup<CR>
+nnoremap <C-w>L :action MoveEditorToOppositeTabGroup<CR>
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>
+
+nnoremap gt         :action GotoTypeDeclaration<CR>
+nnoremap <Leader>s  :action KJumpAction.Word0<CR>
+nnoremap <Leader>q  :action CloseContent<CR>
+nnoremap <Leader>d  :action QuickImplementations<CR>
+nnoremap <Leader>t  :action QuickJavaDoc<CR>
+nnoremap <Leader>e  :action ShowErrorDescription<CR>
+nnoremap <Leader>u  :action FindUsages<CR>
+nnoremap <Leader>rn :action RenameElement<CR>
+nnoremap <Leader>c  :action ChangeColorScheme<CR>
+nnoremap <Leader>;  :actionlist<Space>
+vnoremap <Leader>a  :action StringManipulation.AlignToColumns<CR>
+nnoremap <Leader>bb :action BuildCurrentProject<CR>
+nnoremap <Leader>br :action Run<CR>
+nnoremap <Leader>bd :action Debug<CR>
+nnoremap <Leader>bs :action BuildSolutionAction<CR>
+
+vnoremap gq :action aligncarets.AlignAction<CR>
+nnoremap <Leader>w :action SaveDocument<CR>
+
+noremap = :action ReformatCode<CR>
+vnoremap = :action ReformatCode<CR>
+nnoremap <Leader>/ :nohlsearch<CR>
+nnoremap g/ :action Find<CR>
+nnoremap ga :action GotoAction<CR>
+
+" So we jump to both line and column for marks
+nnoremap ' `
+nnoremap Y y$
+nnoremap $ g_
+nnoremap vv ^vg_
+nnoremap g; :action JumpToLastChange<CR>
+nnoremap g, :action JumpToNextChange<CR>
+nnoremap ; :
+nnoremap : ;
+
+nnoremap <C-1> :action GoToTab1<CR>
+nnoremap <C-2> :action GoToTab2<CR>
+nnoremap <C-3> :action GoToTab3<CR>
+nnoremap <C-4> :action GoToTab4<CR>
+nnoremap <C-5> :action GoToTab5<CR>
+nnoremap <C-6> :action GoToTab6<CR>
+nnoremap <C-7> :action GoToTab7<CR>
+nnoremap <C-8> :action GoToTab8<CR>
+nnoremap <C-9> :action GoToTab9<CR>
+
+nnoremap <A-2> :action ActivateStructureToolWindow<CR>
+nnoremap <C-j> :action MoveLineDown<CR>
+nnoremap <C-k> :action MoveLineUp<CR>
+nnoremap <C-h> <c-w>h
+nnoremap <C-l> <c-w>l
+noremap <C-S-s> :action SurroundWithLiveTemplate<CR>
+nnoremap <A-h> gT
+nnoremap <A-l> gt
+nnoremap <A-j> :action EditorCloneCaretBelow<CR>
+nnoremap <A-k> :action EditorCloneCaretAbove<CR>
+nnoremap <A-;> A;<Esc>
+inoremap <A-;> <Esc>A;<Esc>
+nnoremap <A-d> :action ToggleDistractionFreeMode<CR>
+nnoremap <A-f> :action ToggleFullScreen<CR>
+nnoremap <A-e> :action GotoNextError<CR>
+nnoremap <S-A-e> :action GotoPreviousError<CR>
+nnoremap <A-o> moo<Esc>'o
+nnoremap <A-S-o> moO<Esc>'o

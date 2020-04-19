@@ -1,0 +1,938 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: alacritty
+
+window:
+  # Window dimensions (changes require restart)
+  #
+  # Specified in number of columns/lines, not pixels.
+  # If both are `0`, this setting is ignored.
+  dimensions:
+    columns: 232
+    lines: 60
+
+  # Window position (changes require restart)
+  #
+  # Specified in number of pixels.
+  # If the position is not set, the window manager will handle the placement.
+  position:
+    x: 24
+    y: 22
+
+  # Window padding (changes require restart)
+  #
+  # Blank space added around the window in pixels. This padding is scaled
+  # by DPI and the specified value is always added at both opposing sides.
+  padding:
+    x: 5
+    y: 5
+
+  # Spread additional padding evenly around the terminal content.
+  #dynamic_padding: true
+
+  # Window decorations
+  #
+  # Values for `decorations`:
+  #     - full: Borders and title bar
+  #     - none: Neither borders nor title bar
+  #
+  # Values for `decorations` (macOS only):
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background, but no title bar buttons
+  decorations: none
+
+  # Startup Mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
+  startup_mode: Windowed
+
+  # Window title
+  title: Alacritty
+
+  # Window class (Linux/BSD only):
+  #class:
+    # Application instance name
+    #instance: Alacritty
+    # General application class
+    #general: Alacritty
+
+  # GTK theme variant (Linux/BSD only)
+  #
+  # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
+  # Set this to `None` to use the default theme variant.
+  #gtk_theme_variant: None
+
+#scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  #history: 10000
+
+  # Number of lines the viewport will move for every line scrolled when
+  # scrollback is enabled (history > 0).
+  #multiplier: 3
+
+# Font configuration
+font:
+  # Normal (roman) font face
+  # normal:
+    # Font family
+    #
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    # family: Fira Code Medium
+
+    # The `style` can be specified to pick a specific face.
+    #style: Regular
+
+  # Bold font face
+  #bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold
+
+  # Italic font face
+  #italic:
+    # Font family
+    #
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    #style: Italic
+
+  # Bold italic font face
+  #bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold Italic
+
+  # Point size
+  size: 11.0
+
+  # Offset is the extra space around each character. `offset.y` can be thought of
+  # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
+  #offset:
+  #  x: 0
+  #  y: 0
+
+  # Glyph offset determines the locations of the glyphs within their cells with
+  # the default being at the bottom. Increasing `x` moves the glyph to the right,
+  # increasing `y` moves the glyph upwards.
+  #glyph_offset:
+  #  x: 0
+  #  y: 0
+
+  # Thin stroke font rendering (macOS only)
+  #
+  # Thin strokes are suitable for retina displays, but for non-retina screens
+  # it is recommended to set `use_thin_strokes` to `false`
+  #
+  # macOS >= 10.14.x:
+  #
+  # If the font quality on non-retina display looks bad then set
+  # `use_thin_strokes` to `true` and enable font smoothing by running the
+  # following command:
+  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
+  #
+  # This is a global setting and will require a log out or restart to take
+  # effect.
+  #use_thin_strokes: true
+
+# If `true`, bold text is drawn using the bright color variants.
+#draw_bold_text_with_bright_colors: false
+
+schemes:
+   Xterm: &xterm
+   # Default colors
+       primary:
+         background: '#000000'
+         foreground: '#ffffff'
+       # Normal colors
+       normal:
+         black:   '#000000'
+         red:     '#cd0000'
+         green:   '#00cd00'
+         yellow:  '#cdcd00'
+         blue:    '#0000ee'
+         magenta: '#cd00cd'
+         cyan:    '#00cdcd'
+         white:   '#e5e5e5'
+       # Bright colors
+       bright:
+         black:   '#7f7f7f'
+         red:     '#ff0000'
+         green:   '#00ff00'
+         yellow:  '#ffff00'
+         blue:    '#5c5cff'
+         magenta: '#ff00ff'
+         cyan:    '#00ffff'
+         white:   '#ffffff'
+   # Colors (Ubuntu)
+
+   Ayu Dark: &ayu
+     # Default colors
+     primary:
+       background: '#0A0E14'
+       foreground: '#B3B1AD'
+   
+     # Normal colors
+     normal:
+       black: '#01060E'
+       red: '#EA6C73'
+       green: '#91B362'
+       yellow: '#F9AF4F'
+       blue: '#53BDFA'
+       magenta: '#FAE994'
+       cyan: '#90E1C6'
+       white: '#C7C7C7'
+   
+     # Bright colors
+     bright:
+       black: '#686868'
+       red: '#F07178'
+       green: '#C2D94C'
+       yellow: '#FFB454'
+       blue: '#59C2FF'
+       magenta: '#FFEE99'
+       cyan: '#95E6CB'
+       white: '#FFFFFF'
+
+   Tomorrow Night: &tmr
+     # Default colors
+     primary:
+       background: '0x1d1f21'
+       foreground: '0xc5c8c6'
+   
+     # Colors the cursor will use if `custom_cursor_colors` is true
+     cursor:
+       text: '0x1d1f21'
+       cursor: '0xc5c8c6'
+   
+     # Normal colors
+     normal:
+       black:   '0x1d1f21'
+       red:     '0xcc6666'
+       green:   '0xb5bd68'
+       yellow:  '0xf0c674'
+       blue:    '0x81a2be'
+       magenta: '0xb294bb'
+       cyan:    '0x8abeb7'
+       white:   '0xc5c8c6'
+   
+     # Bright colors
+     bright:
+       black:   '0x969896'
+       red:     '0xcc6666'
+       green:   '0xb5bd68'
+       yellow:  '0xf0c674'
+       blue:    '0x81a2be'
+       magenta: '0xb294bb'
+       cyan:    '0x8abeb7'
+       white:   '0xffffff'
+   
+     indexed_colors:
+       - { index: 16, color: '0xde935f' }
+       - { index: 17, color: '0xa3685a' }
+       - { index: 18, color: '0x282a2e' }
+       - { index: 19, color: '0x373b41' }
+       - { index: 20, color: '0xb4b7b4' }
+       - { index: 21, color: '0xe0e0e0' } 
+
+   Dracula: &dracula
+  # Default colors
+     primary:
+       background: '#282a36'
+       foreground: '#f8f8f2'
+   
+     # Normal colors
+     normal:
+       black:   '#000000'
+       red:     '#ff5555'
+       green:   '#50fa7b'
+       yellow:  '#f1fa8c'
+       blue:    '#caa9fa'
+       magenta: '#ff79c6'
+       cyan:    '#8be9fd'
+       white:   '#bfbfbf'
+   
+     # Bright colors
+     bright:
+       black:   '#575b70'
+       red:     '#ff6e67'
+       green:   '#5af78e'
+       yellow:  '#f4f99d'
+       blue:    '#caa9fa'
+       magenta: '#ff92d0'
+       cyan:    '#9aedfe'
+       white:   '#e6e6e6'
+  
+   # Colors (iTerm 2 default theme)
+   iTerm: &iterm
+    # Default colors
+    primary:
+      background: '#101421'
+      foreground: '#fffbf6'
+   
+    # Normal colors
+    normal:
+      black:   '#2e2e2e'
+      red:     '#eb4129'
+      green:   '#abe047'
+      yellow:  '#f6c744'
+      blue:    '#47a0f3'
+      magenta: '#7b5cb0'
+      cyan:    '#64dbed'
+      white:   '#e5e9f0'
+   
+    # Bright colors
+    bright:
+      black:   '#565656'
+      red:     '#ec5357'
+      green:   '#c0e17d'
+      yellow:  '#f9da6a'
+      blue:    '#49a4f8'
+      magenta: '#a47de9'
+      cyan:    '#99faf2'
+      white:   '#ffffff'
+   
+
+
+
+
+
+
+   ## [New Moon](https://github.com/taniarascia/new-moon)
+   
+   # Colors (New Moon)
+   New Moon: &newmoon
+     # Default colors
+     primary:
+       background: '#2D2D2D'
+       foreground: '#B3B9C5'
+     # Normal colors
+     normal:
+       black: '#2D2D2D'
+       red: '#F2777A'
+       green: '#92D192'
+       yellow: '#FFD479'
+       blue: '#6AB0F3'
+       magenta: '#E1A6F2'
+       cyan: '#76D4D6'
+       white: '#B3B9C5'
+     # Bright colors
+     bright:
+       black: '#777C85'
+       red: '#F2777A'
+       green: '#76D4D6'
+       yellow: '#FFEEA6'
+       blue: '#6AB0F3'
+       magenta: '#E1A6F2'
+       cyan: '#76D4D6'
+       white: '#FFFFFF'
+   
+   ## [Nord](https://github.com/arcticicestudio/nord)
+   
+   # Colors (Nord)
+   Nord: &nord
+      # Default colors
+      primary:
+        background: '#2E3440'
+        foreground: '#D8DEE9'
+   
+      # Normal colors
+      normal:
+        black:   '#3B4252'
+        red:     '#BF616A'
+        green:   '#A3BE8C'
+        yellow:  '#EBCB8B'
+        blue:    '#81A1C1'
+        magenta: '#B48EAD'
+        cyan:    '#88C0D0'
+        white:   '#E5E9F0'
+   
+      # Bright colors
+      bright:
+        black:   '#4C566A'
+        red:     '#BF616A'
+        green:   '#A3BE8C'
+        yellow:  '#EBCB8B'
+        blue:    '#81A1C1'
+        magenta: '#B48EAD'
+        cyan:    '#8FBCBB'
+        white:   '#ECEFF4'
+   
+   ## [Oceanic Next](https://github.com/voronianski/oceanic-next-color-scheme)
+   
+   # Colors (Oceanic Next)
+   Oceanic: &oceanic
+     # Default colors
+     primary:
+       background: '#1b2b34'
+       foreground: '#d8dee9'
+   
+     # Colors the cursor will use if `custom_cursor_colors` is true
+     cursor:
+       text: '#1b2b34'
+       cursor: '#ffffff'
+   
+     # Normal colors
+     normal:
+       black:   '#343d46'
+       red:     '#EC5f67'
+       green:   '#99C794'
+       yellow:  '#FAC863'
+       blue:    '#6699cc'
+       magenta: '#c594c5'
+       cyan:    '#5fb3b3'
+       white:   '#d8dee9'
+   
+     # Bright colors
+     bright:
+       black:   '#343d46'
+       red:     '#EC5f67'
+       green:   '#99C794'
+       yellow:  '#FAC863'
+       blue:    '#6699cc'
+       magenta: '#c594c5'
+       cyan:    '#5fb3b3'
+       white:   '#d8dee9'
+   
+   ## One Dark
+   
+   # Colors (One Dark)
+   One Dark: &onedark
+     # Default colors
+     primary:
+       background: '#282c34'
+       foreground: '#abb2bf'
+   
+     # Normal colors
+     normal:
+       # NOTE: Use '#131613' for the `black` color if you'd like to see
+       # black text on the background.
+       black:   '#282c34'
+       red:     '#e06c75'
+       green:   '#98c379'
+       yellow:  '#d19a66'
+       blue:    '#61afef'
+       magenta: '#c678dd'
+       cyan:    '#56b6c2'
+       white:   '#abb2bf'
+   
+     # Bright colors
+     bright:
+       black:   '#5c6370'
+       red:     '#e06c75'
+       green:   '#98c379'
+       yellow:  '#d19a66'
+       blue:    '#61afef'
+       magenta: '#c678dd'
+       cyan:    '#56b6c2'
+       white:   '#ffffff'
+   
+   ## [Oxide](https://github.com/dikiaap/dotfiles)
+   
+   # Colors (Oxide)
+   Oxide: &oxide
+     # Default colors
+     primary:
+       background: '#212121'
+       foreground: '#c0c5ce'
+       bright_foreground: '#f3f4f5'
+   
+     cursor:
+       text: '#212121'
+       cursor: '#c0c5ce'
+   
+     # Normal colors
+     normal:
+       black:   '#212121'
+       red:     '#e57373'
+       green:   '#a6bc69'
+       yellow:  '#fac863'
+       blue:    '#6699cc'
+       magenta: '#c594c5'
+       cyan:    '#5fb3b3'
+       white:   '#c0c5ce'
+   
+     # Bright colors
+     bright:
+       black:   '#5c5c5c'
+       red:     '#e57373'
+       green:   '#a6bc69'
+       yellow:  '#fac863'
+       blue:    '#6699cc'
+       magenta: '#c594c5'
+       cyan:    '#5fb3b3'
+       white:   '#f3f4f5'
+   
+   ## [Snazzy](https://github.com/sindresorhus/hyper-snazzy)
+   
+   # Colors (Snazzy)
+   Snazzy: &snazzy
+     # Default colors
+     primary:
+       background: '#282a36'
+       foreground: '#eff0eb'
+   
+     # Normal colors
+     normal:
+       black:   '#282a36'
+       red:     '#ff5c57'
+       green:   '#5af78e'
+       yellow:  '#f3f99d'
+       blue:    '#57c7ff'
+       magenta: '#ff6ac1'
+       cyan:    '#9aedfe'
+       white:   '#f1f1f0'
+   
+     # Bright colors
+     bright:
+       black:   '#686868'
+       red:     '#ff5c57'
+       green:   '#5af78e'
+       yellow:  '#f3f99d'
+       blue:    '#57c7ff'
+       magenta: '#ff6ac1'
+       cyan:    '#9aedfe'
+       white:   '#f1f1f0'
+   
+   ## [Taerminal](https://github.com/cozywigwam/iterm-taerminal)
+   
+   # Colors (Taerminal)
+   Taerminal: &taerminal
+     # Default colors
+     primary:
+       background: '#26282a'
+       foreground: '#f0f0f0'
+     cursor:
+       background: '#f0f0f0'
+       foreground: '#26282a'
+   
+     # Normal colors
+     normal:
+       black:   '#26282a'
+       red:     '#ff8878'
+       green:   '#b4fb73'
+       yellow:  '#fffcb7'
+       blue:    '#8bbce5'
+       magenta: '#ffb2fe'
+       cyan:    '#a2e1f8'
+       white:   '#f1f1f1'
+   
+     # Bright colors
+     bright:
+       black:   '#6f6f6f'
+       red:     '#fe978b'
+       green:   '#d6fcba'
+       yellow:  '#fffed5'
+       blue:    '#c2e3ff'
+       magenta: '#ffc6ff'
+       cyan:    '#c0e9f8'
+       white:   '#ffffff'
+   
+   ## [Tender](https://github.com/huyvohcmc/tender-alacritty)
+   
+   # Colors (Tender)
+   Tender: &tender
+     # Default colors
+     primary:
+       background: '#282828'
+       foreground: '#eeeeee'
+   
+     # Normal colors
+     normal:
+       black:   '#282828'
+       red:     '#f43753'
+       green:   '#c9d05c'
+       yellow:  '#ffc24b'
+       blue:    '#b3deef'
+       magenta: '#d3b987'
+       cyan:    '#73cef4'
+       white:   '#eeeeee'
+   
+     # Bright colors
+     bright:
+       black:   '#4c4c4c'
+       red:     '#f43753'
+       green:   '#c9d05c'
+       yellow:  '#ffc24b'
+       blue:    '#b3deef'
+       magenta: '#d3b987'
+       cyan:    '#73cef4'
+       white:   '#feffff'
+   
+
+#colors: *tender
+#colors: *ayu
+#colors: *dracula
+#colors: *tmr
+#colors: *iterm
+colors: *newmoon
+#colors: *nord
+#colors: *oceanic
+#colors: *onedark
+#colors: *oxide
+#colors: *snazzy
+#colors: *taerminal
+custom_cursor_colors: true
+
+# black
+# red
+# green
+# yellow
+# blue
+# magenta
+# cyan
+# white
+# brblack
+# brred
+# brgreen
+# bryellow
+# brblue
+# brmagenta
+# brcyan
+# brwhite
+# normal
+
+
+
+# Visual Bell
+#
+# Any time the BEL code is received, Alacritty "rings" the visual bell. Once
+# rung, the terminal background will be set to white and transition back to the
+# default background color. You can control the rate of this transition by
+# setting the `duration` property (represented in milliseconds). You can also
+# configure the transition function by setting the `animation` property.
+#
+# Values for `animation`:
+#   - Ease
+#   - EaseOut
+#   - EaseOutSine
+#   - EaseOutQuad
+#   - EaseOutCubic
+#   - EaseOutQuart
+#   - EaseOutQuint
+#   - EaseOutExpo
+#   - EaseOutCirc
+#   - Linear
+#
+# Specifying a `duration` of `0` will disable the visual bell.
+#visual_bell:
+#  animation: EaseOutExpo
+#  duration: 0
+#  color: '#ffffff'
+
+# Background opacity
+#
+# Window opacity as a floating point number from `0.0` to `1.0`.
+# The value `0.0` is completely transparent and `1.0` is opaque.
+background_opacity: 0.75
+
+#selection:
+  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  #save_to_clipboard: false
+
+# Allow terminal applications to change Alacritty's window title.
+#dynamic_title: true
+
+#cursor:
+  # Cursor style
+  #
+  # Values for `style`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  #style: Block
+
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  #unfocused_hollow: true
+
+# Live config reload (changes require restart)
+#live_config_reload: true
+
+# Shell
+#
+# You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
+# Entries in `shell.args` are passed unmodified as arguments to the shell.
+#
+# Default:
+#   - (macOS) /bin/bash --login
+#   - (Linux/BSD) user login shell
+#   - (Windows) powershell
+shell:
+  program: wsl
+#  args:
+#    - --login
+
+# Startup directory
+#
+# Directory the shell is started in. If this is unset, or `None`, the working
+# directory of the parent process will be used.
+working_directory: C:\Users\josep
+
+# WinPTY backend (Windows only)
+#
+# Alacritty defaults to using the newer ConPTY backend if it is available,
+# since it resolves a lot of bugs and is quite a bit faster. If it is not
+# available, the the WinPTY backend will be used instead.
+#
+# Setting this option to `true` makes Alacritty use the legacy WinPTY backend,
+# even if the ConPTY backend is available.
+#winpty_backend: false
+
+# Send ESC (\x1b) before characters when alt is pressed.
+#alt_send_esc: true
+
+mouse:
+  # Click settings
+  #
+  # The `double_click` and `triple_click` settings control the time
+  # alacritty should wait for accepting multiple clicks as one double
+  # or triple click.
+  double_click: { threshold: 300 }
+  #triple_click: { threshold: 300 }
+
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  #hide_when_typing: false
+
+  #url:
+    # URL launcher
+    #
+    # This program is executed when clicking on a text which is recognized as a URL.
+    # The URL is always added to the command as the last parameter.
+    #
+    # When set to `None`, URL launching will be disabled completely.
+    #
+    # Default:
+    #   - (macOS) open
+    #   - (Linux/BSD) xdg-open
+    #   - (Windows) explorer
+    #launcher:
+    #  program: xdg-open
+    #  args: []
+
+    # URL modifiers
+    #
+    # These are the modifiers that need to be held down for opening URLs when clicking
+    # on them. The available modifiers are documented in the key binding section.
+    #modifiers: None
+
+# Mouse bindings
+#
+# Mouse bindings are specified as a list of objects, much like the key
+# bindings further below.
+#
+# To trigger mouse bindings when an application running within Alacritty captures the mouse, the
+# `Shift` modifier is automatically added as a requirement.
+#
+# Each mouse binding will specify a:
+#
+# - `mouse`:
+#
+#   - Middle
+#   - Left
+#   - Right
+#   - Numeric identifier such as `5`
+#
+# - `action` (see key bindings)
+#
+# And optionally:
+#
+# - `mods` (see key bindings)
+#mouse_bindings:
+#  - { mouse: Middle, action: PasteSelection }
+
+# Key bindings
+#
+# Key bindings are specified as a list of objects. For example, this is the
+# default paste binding:
+#
+# `- { key: V, mods: Control|Shift, action: Paste }`
+#
+# Each key binding will specify a:
+#
+# - `key`: Identifier of the key pressed
+#
+#    - A-Z
+#    - F1-F24
+#    - Key0-Key9
+#
+#    A full list with available key codes can be found here:
+#    https://docs.rs/glutin/*/glutin/event/enum.VirtualKeyCode.html#variants
+#
+#    Instead of using the name of the keys, the `key` field also supports using
+#    the scancode of the desired key. Scancodes have to be specified as a
+#    decimal number. This command will allow you to display the hex scancodes
+#    for certain keys:
+#
+#       `showkey --scancodes`.
+#
+# Then exactly one of:
+#
+# - `chars`: Send a byte sequence to the running application
+#
+#    The `chars` field writes the specified string to the terminal. This makes
+#    it possible to pass escape sequences. To find escape codes for bindings
+#    like `PageUp` (`"\x1b[5~"`), you can run the command `showkey -a` outside
+#    of tmux. Note that applications use terminfo to map escape sequences back
+#    to keys. It is therefore required to update the terminfo when changing an
+#    escape sequence.
+#
+# - `action`: Execute a predefined action
+#
+#   - Copy
+#   - Paste
+#   - PasteSelection
+#   - IncreaseFontSize
+#   - DecreaseFontSize
+#   - ResetFontSize
+#   - ScrollPageUp
+#   - ScrollPageDown
+#   - ScrollLineUp
+#   - ScrollLineDown
+#   - ScrollToTop
+#   - ScrollToBottom
+#   - ClearHistory
+#   - Hide
+#   - Minimize
+#   - Quit
+#   - ToggleFullscreen
+#   - SpawnNewInstance
+#   - ClearLogNotice
+#   - ReceiveChar
+#   - None
+#
+#   (macOS only):
+#   - ToggleSimpleFullscreen: Enters fullscreen without occupying another space
+#
+# - `command`: Fork and execute a specified command plus arguments
+#
+#    The `command` field must be a map containing a `program` string and an
+#    `args` array of command line parameter strings. For example:
+#       `{ program: "alacritty", args: ["-e", "vttest"] }`
+#
+# And optionally:
+#
+# - `mods`: Key modifiers to filter binding actions
+#
+#    - Command
+#    - Control
+#    - Option
+#    - Super
+#    - Shift
+#    - Alt
+#
+#    Multiple `mods` can be combined using `|` like this:
+#       `mods: Control|Shift`.
+#    Whitespace and capitalization are relevant and must match the example.
+#
+# - `mode`: Indicate a binding for only specific terminal reported modes
+#
+#    This is mainly used to send applications the correct escape sequences
+#    when in different modes.
+#
+#    - AppCursor
+#    - AppKeypad
+#    - Alt
+#
+#    A `~` operator can be used before a mode to apply the binding whenever
+#    the mode is *not* active, e.g. `~Alt`.
+#
+# Bindings are always filled by default, but will be replaced when a new
+# binding with the same triggers is defined. To unset a default binding, it can
+# be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
+# a no-op if you do not wish to receive input characters for that binding.
+#
+# If the same trigger is assigned to multiple actions, all of them are executed
+# at once.
+key_bindings:
+  # (Windows, Linux, and BSD only)
+  - { key: V,        mods: Alt, action: Paste            }
+  - { key: C,        mods: Alt, action: Copy             }
+  #- { key: Insert,   mods: Shift,         action: PasteSelection   }
+  #- { key: Key0,     mods: Control,       action: ResetFontSize    }
+  #- { key: Equals,   mods: Control,       action: IncreaseFontSize }
+  #- { key: Add,      mods: Control,       action: IncreaseFontSize }
+  #- { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  #- { key: Minus,    mods: Control,       action: DecreaseFontSize }
+
+  # (Windows only)
+  #- { key: Return,   mods: Alt,           action: ToggleFullscreen }
+
+  # (macOS only)
+  #- { key: Key0,   mods: Command,         action: ResetFontSize    }
+  #- { key: Equals, mods: Command,         action: IncreaseFontSize }
+  #- { key: Add,    mods: Command,         action: IncreaseFontSize }
+  #- { key: Minus,  mods: Command,         action: DecreaseFontSize }
+  #- { key: K,      mods: Command,         action: ClearHistory     }
+  #- { key: K,      mods: Command,         chars: "\x0c"            }
+  #- { key: V,      mods: Command,         action: Paste            }
+  #- { key: C,      mods: Command,         action: Copy             }
+  #- { key: H,      mods: Command,         action: Hide             }
+  #- { key: M,      mods: Command,         action: Minimize         }
+  #- { key: Q,      mods: Command,         action: Quit             }
+  #- { key: W,      mods: Command,         action: Quit             }
+  #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
+
+  #- { key: Paste,                    action: Paste                            }
+  #- { key: Copy,                     action: Copy                             }
+  #- { key: L,         mods: Control, action: ClearLogNotice                   }
+  #- { key: L,         mods: Control, chars: "\x0c"                            }
+  #- { key: PageUp,    mods: Shift,   action: ScrollPageUp,   mode: ~Alt       }
+  #- { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
+  #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
+  #- { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
+
+#debug:
+  # Display the time it takes to redraw each frame.
+  #render_timer: false
+
+  # Keep the log file after quitting Alacritty.
+  #persistent_logging: false
+
+  # Log level
+  #
+  # Values for `log_level`:
+  #   - None
+  #   - Error
+  #   - Warn
+  #   - Info
+  #   - Debug
+  #   - Trace
+  #log_level: Warn
+
+  # Print all received window events.
+  #print_events: false
