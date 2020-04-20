@@ -17,6 +17,7 @@ set ttimeoutlen=0
 set noswapfile
 set nobackup
 set hidden
+set autoindent
 color peachpuff
 let mapleader = "\<Space>"
 
