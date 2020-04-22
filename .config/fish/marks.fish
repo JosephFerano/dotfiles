@@ -73,7 +73,7 @@ function bookmark --description "Bookmark files and directories in fish"
             echo "$bname $bpath" >> $BMS_FILE
             set -l ftype ([ -d $bname ] && echo "file" || echo "directory")
             echo "Bookmark '$bname' added for $ftype $bpath"
-            __bookmarks_update_completions
+            # __bookmarks_update_completions
 
         case "remove"
             if [ (count $argv) -lt 2 ]
@@ -97,20 +97,6 @@ function bookmark --description "Bookmark files and directories in fish"
             echo
     end
         
-end
-
-function _valid_bookmark
-    if begin; [ (count $argv) -lt 1 ]; or not [ -n $argv[1] ]; end
-        return 1
-    else
-        cat $BMS_FILE | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
-        set -l bookmark (env | grep "^DIR_$argv[1]=" | cut -f1 -d "=" | cut -f2 -d "_" )
-        if begin; not [ -n "$bookmark" ]; or not [ $bookmark=$argv[1] ]; end
-            return 1
-        else
-            return 0
-        end
-    end
 end
 
 function __bookmarks_opener --description "Default opener"
