@@ -64,6 +64,7 @@ nnoremap <C-y> 2<C-y>
 
 nnoremap gt         :action GotoTypeDeclaration<CR>
 nnoremap <Leader>s  :action KJumpAction.Word0<CR>
+nnoremap <Leader>h  :action HideAllWindows<CR>
 nnoremap <Leader>q  :action CloseContent<CR>
 nnoremap <Leader>d  :action QuickImplementations<CR>
 nnoremap <Leader>t  :action QuickJavaDoc<CR>

@@ -4,6 +4,7 @@ set -g MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set EDITOR vim
 set -U FZF_COMPLETE 0
 set -U FZF_LEGACY_KEYBINDINGS 0
+set -U FZF_DEFAULT_OPTS "--height 40% --reverse --border"
 
 source ~/.config/fish/dircolors.fish
 source ~/.config/fish/marks.fish

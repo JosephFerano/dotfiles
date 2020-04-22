@@ -1,11 +1,14 @@
 if not set -q BMS_FILE
     set -gx BMS_FILE $HOME/.config/fish/bmarks
 end
+if not set -q BMS_OPENER
+    set -gx BMS_OPENER xdg-open
+end
 
 touch $BMS_FILE
 
-set title_col (set_color white)
-set text_col (set_color green)
+set title_col (set_color cyan)
+set text_col (set_color normal)
 set error_col (set_color red)
 
 function bookmark --description "Bookmark files and directories in fish"
@@ -22,39 +25,38 @@ function bookmark --description "Bookmark files and directories in fish"
     switch $argv[1]
         case "go"
             if [ (count $argv) -lt 2 ]
-                echo -n $error_col
-                echo -e "Error: Please provide the bookmark name"
-                echo -n $text_col
+                __bookmarks_print_error "Please provide the bookmark name"
                 return 1
             end
-            set bname $argv[2]
-            if grep -q "^$bname " $BMS_FILE
-                echo -n $error_col
-                echo "Error: No bookmark by the name of $bname exists."
-                echo -n $text_col
+            set -l bname $argv[2]
+            if not grep -q "^$bname " $BMS_FILE
+                __bookmarks_print_error "No bookmark by the name of $bname exists."
                 return 1
             end
-            set bpath (cut -f2- -d' ')
-            if [ -e $bpath ]
+            set bpath (grep "^$bname " $BMS_FILE | cut -f2- -d' ')
+            if [ -e "$bpath" ]
+                if [ -d "$bpath" ]
+                    cd "$bpath"
+                    return 0
+                else
+                    __bookmarks_opener "$bpath"
+                end
             else
-                
+                __bookmarks_print_error "Bookmark is no longer valid for $bpath."
+                # TODO Add prompt for deletion
             end
             
         case "add"
             if [ (count $argv) -gt 1 ]
                 set bname $argv[2]
                 if echo $bname | not grep -q "^[a-zA-Z0-9_-]*\$"
-                    echo -n $error_col
-                    echo -e "Error: Bookmark names may only contain alphanumeric characters and underscores."
-                    echo -n $text_col
+                    __bookmarks_print_error "Bookmark names may only contain alphanumeric characters and underscores."
                     return 1
                 end
                 if [ (count $argv) -gt 2 ]
                     set bpath (readlink -f $argv[3])
-                    if not [ -e $bpath ]
-                        echo -n $error_col
-                        echo -e "Error: No directory or path exist for provided argument."
-                        echo -n $text_col
+                    if not [ -e "$bpath" ]
+                        __bookmarks_print_error "No directory or path exist for provided argument."
                         return 1
                     end
                 else
@@ -65,9 +67,7 @@ function bookmark --description "Bookmark files and directories in fish"
                 set bpath (pwd)
             end
             if grep -q "^$bname " $BMS_FILE
-                echo -n $error_col
-                echo "Error: Bookmark $bname already exists."
-                echo -n $text_col
+                __bookmarks_print_error "Bookmark $bname already exists."
                 return 1
             end
             echo "$bname $bpath" >> $BMS_FILE
@@ -76,66 +76,27 @@ function bookmark --description "Bookmark files and directories in fish"
             __bookmarks_update_completions
 
         case "remove"
-            # if grep -q "^
+            if [ (count $argv) -lt 2 ]
+                __bookmarks_print_error "Please provide the bookmark name"
+                return 1
+            end
+            set -l bname $argv[2]
+            if not grep -q "^$bname " $BMS_FILE
+                __bookmarks_print_error "No bookmark by the name of $bname exists."
+                return 1
+            end
+            sed -i "/^$bname /d" bmarks
+            echo "Bookmark '$bname' removed."
 
         case "list"
-            cat $BMS_FILE
+            set bpath (grep "^$bname " $BMS_FILE | cut -f2- -d' ')
+            # Use a random delimeter {*#*} that's unlikely that someone has used for a file/dir name
+            # If not directories with spaces will be split into columns
+            echo -n (set_color green)
+            echo " Name {*#*} Path" | cat - $BMS_FILE | sed "2,\$ s/^\([[:alnum:]_-]\+\)/$title_col &{*#*}$text_col/" | column -t -s "{*#*}"
+            echo
     end
         
-end
-
-function go_to_bookmark --description "Go to (cd) to the directory associated with a bookmark"
-    if [ (count $argv) -lt 1 ]
-        echo -e "\033[0;31mERROR: '' bookmark does not exist\033[00m"
-        return 1
-    end
-    if not _check_help $argv[1];
-        cat $BMS_FILE | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
-        set -l target (env | grep "^DIR_$argv[1]=" | cut -f2 -d "=")
-        if [ ! -n "$target" ]
-            echo -e "\033[0;31mERROR: '$argv[1]' bookmark does not exist\033[00m"
-            return 1
-        end
-        if [ -d "$target" ]
-            cd "$target"
-            return 0
-        else
-            echo -e "\033[0;31mERROR: '$target' does not exist\033[00m"
-            return 1
-        end
-    end
-end
-
-function print_bookmark --description "Print the directory associated with a bookmark"
-    if [ (count $argv) -lt 1 ]
-        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
-        return 1
-    end
-    if not _check_help $argv[1];
-        cat $BMS_FILE | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
-        env | grep "^DIR_$argv[1]=" | cut -f2 -d "="
-    end
-end
-
-function delete_bookmark --description "Delete a bookmark"
-    if [ (count $argv) -lt 1 ]
-        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
-        return 1
-    end
-    if not _valid_bookmark $argv[1];
-        echo -e "\033[0;31mERROR: bookmark '$argv[1]' does not exist\033[00m"
-        return 1
-    else
-        sed -i='' "/DIR_$argv[1]=/d" $BMS_FILE
-        _update_completions
-    end
-end
-
-function list_bookmarks --description "List all available bookmarks"
-    if not _check_help $argv[1];
-        cat $BMS_FILE | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
-        env | sort | awk '/DIR_.+/{split(substr($0,5),parts,"="); printf("\033[0;33m%-20s\033[0m %s\n", parts[1], parts[2]);}'
-    end
 end
 
 function _valid_bookmark
@@ -150,6 +111,27 @@ function _valid_bookmark
             return 0
         end
     end
+end
+
+function __bookmarks_opener --description "Default opener"
+    set -l f "$argv[1]"
+    switch (file --mime-type -b "$f")
+        case "text/*"
+            $EDITOR "$f"
+        case "application/*"
+            file "$f" | grep -iq text && $EDITOR "$f" || $BMS_OPENER "$f"
+        case "image/*"
+            sxiv "$f" 2> /dev/null && $BMS_OPENER "$f"
+        case "*"
+            $BMS_OPENER "$f"
+    end
+end
+
+function __bookmarks_print_error
+    echo -n $error_col
+    echo -n "Error: "
+    echo -n $text_col
+    echo $argv[1]
 end
 
 function __bookmarks_update_completions
