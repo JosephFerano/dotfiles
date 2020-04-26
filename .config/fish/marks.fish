@@ -5,7 +5,9 @@ if not set -q BMS_OPENER
     set -gx BMS_OPENER xdg-open
 end
 
-touch $BMS_FILE
+if [ ! -e "$BMS_FILE" ]
+    touch $BMS_FILE
+end
 
 set title_col (set_color cyan)
 set text_col (set_color normal)
@@ -13,6 +15,8 @@ set error_col (set_color red)
 
 function bookmark --description "Bookmark files and directories in fish"
     if [ (count $argv) -lt 1 ]; or [ "-h" = $argv[1] ]; or [ "-help" = $argv[1] ]; or [ "--help" = $argv[1] ]
+        echo ''
+        echo 'Create bookmarks to all your favorite files and directories. Data written to $HOME/.config/fish/bmarks'
         echo ''
         echo -n 'add <bookmark name> <dir|file name> - Adds the file/directory directory as "bookmark_name". '
         echo    'If no name is provided, the current working directory is used.'
@@ -43,7 +47,15 @@ function bookmark --description "Bookmark files and directories in fish"
                 end
             else
                 __bookmarks_print_error "Bookmark is no longer valid for $bpath."
-                # TODO Add prompt for deletion
+                read -l -P 'Would you like to remove it?? [y/N] ' confirm
+                switch $confirm
+                    case Y y
+                        sed -i "/^$bname /d" $BMS_FILE
+                        echo "Bookmark '$bname' removed."
+                        __bookmarks_update_completions
+                    case '' n N
+                        return 1
+                end
             end
             
         case "add"
@@ -72,8 +84,8 @@ function bookmark --description "Bookmark files and directories in fish"
             end
             echo "$bname $bpath" >> $BMS_FILE
             set -l ftype ([ -d $bname ] && echo "file" || echo "directory")
+            __bookmarks_update_completions
             echo "Bookmark '$bname' added for $ftype $bpath"
-            # __bookmarks_update_completions
 
         case "remove"
             if [ (count $argv) -lt 2 ]
@@ -85,7 +97,8 @@ function bookmark --description "Bookmark files and directories in fish"
                 __bookmarks_print_error "No bookmark by the name of $bname exists."
                 return 1
             end
-            sed -i "/^$bname /d" bmarks
+            sed -i "/^$bname /d" $BMS_FILE
+            __bookmarks_update_completions
             echo "Bookmark '$bname' removed."
 
         case "list"
@@ -121,14 +134,26 @@ function __bookmarks_print_error
 end
 
 function __bookmarks_update_completions
-    cat $BMS_FILE | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
-    set -x _marks (env | grep "^DIR_" | sed "s/^DIR_//" | cut -f1 -d "=" | tr '\n' ' ')
-    complete -c print_bookmark -a $_marks -f
-    complete -c delete_bookmark -a $_marks -f
-    complete -c go_to_bookmark -a $_marks -f
-    if not set -q NO_FISHMARKS_COMPAT_ALIASES
-        complete -c p -a $_marks -f
-        complete -c d -a $_marks -f
-        complete -c g -a $_marks -f
+    set -l bmarks $HOME/.config/fish/bmarks
+    set -l cmds add remove go list
+    set -l cnd __fish_seen_subcommand_from $cmds
+    # set -l sub_cmd_cnd "(not __fish_seen_subcommand_from) $cmds"
+    complete -f -c bookmark -a "$cmds[1]" -n "not $cnd" -d "Description 1 with more words hello there"
+    complete -f -c bookmark -a "$cmds[2]" -n "not $cnd" -d "Description 2 how about this will this help create the other style?"
+    complete -f -c bookmark -a "$cmds[3]" -n "not $cnd" -d "Description 3"
+    complete -f -c bookmark -a "$cmds[4]" -n "not $cnd" -d "Description 3"
+
+    for bmark in (cat $bmarks)
+        set -l bname (echo $bmark | cut -f1  -d' ')
+        set -l bpath (echo $bmark | cut -f2- -d' ')
+        if [ -e "$bpath" ]
+            set description (echo -n $bpath; [ -d $bpath ] && echo -n ' - Dir' || echo -n ' - File')
+        else
+            set description "Bookmark target no longer exists"
+        end
+
+        complete -x -c bookmark -a "$bname" -n "__fish_seen_subcommand_from go remove" -d "$description"
     end
+
+    complete -c g -w bookmark
 end

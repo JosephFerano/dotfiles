@@ -10,23 +10,22 @@ source ~/.config/fish/dircolors.fish
 source ~/.config/fish/marks.fish
 
 bind \cx 'if jobs > /dev/null ; fg; fish_prompt; end'
-bind \ep 'edit_dotfile'
 
 abbr -a -g c "clip.exe"
 abbr -a -g o wsl-open
 abbr -a -g dot dotfiles
 abbr -a -g fcon "source ~/.config/fish/config.fish"
 
-alias ll "exa -la"
+alias ls "exa --group-directories-first"
+alias ll "exa -la --group-directories-first"
+alias lc "exa -1 --group-directories-first"
+alias lt "exa -l --sort=modified"
+
 alias xdg-open wsl-open
 
 alias dotfiles "git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-alias bms save_bookmark
-alias g fuzzy_bookmarks
-alias bmp print_bookmark
-alias bmd delete_bookmark
-alias bml list_bookmarks
+alias g "bookmark go"
 
 alias restart-tmux "not pgrep tmux && tmux new -d -s delete-me \
                     && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh \
