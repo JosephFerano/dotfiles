@@ -1,7 +1,7 @@
 set -g fish_user_paths $fish_user_paths ~/bin ~/.cargo/bin ~/.local/bin
 
 set -g MANPAGER "sh -c 'col -bx | bat -l man -p'"
-set EDITOR vim
+set EDITOR vi
 set -U FZF_COMPLETE 0
 set -U FZF_LEGACY_KEYBINDINGS 0
 set -U FZF_DEFAULT_OPTS "--height 40% --reverse --border"
@@ -20,6 +20,7 @@ alias ls "exa --group-directories-first"
 alias ll "exa -la --group-directories-first"
 alias lc "exa -1 --group-directories-first"
 alias lt "exa -l --sort=modified"
+alias vi "vim -u ~/.vimrc.basic"
 
 alias xdg-open wsl-open
 
@@ -31,3 +32,5 @@ alias restart-tmux "not pgrep tmux && tmux new -d -s delete-me \
                     && tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh \
                     && tmux kill-session -t delete-me \
                     && tmux attach || tmux attach "
+
+source /home/joe/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

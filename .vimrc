@@ -1,3 +1,12 @@
+call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+Plug 'dag/vim-fish', { 'for' : 'fish' }
+
+call plug#end()
+
 set nocompatible
 syntax on
 set number
@@ -33,8 +42,8 @@ nnoremap ' `
 nnoremap ` '
 
 nnoremap <Leader>w :w<CR>
-nnoremap <Leader>rl :so $MYVIMRC<CR>
 nnoremap <Leader>q :q<CR>
+nnoremap <Leader>rl :so $MYVIMRC<CR>
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -47,3 +56,6 @@ if system('uname -r') =~ "Microsoft"
     autocmd TextYankPost * :call system('clip.exe ',@")
   augroup END
 endif
+ 
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
