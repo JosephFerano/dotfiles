@@ -1,3 +1,4 @@
+# Copy path to file to windows path
 function cw
     set -l wpath (wslpath -a -w (readlink -f "$argv[1]"))
     echo Copied \"$wpath\" to clipboard
