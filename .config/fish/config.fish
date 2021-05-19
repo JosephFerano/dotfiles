@@ -76,4 +76,4 @@ alias restart-tmux "not pgrep tmux && tmux new -d -s delete-me \
                     && tmux kill-session -t delete-me \
                     && tmux attach || tmux attach "
 
-source /home/joe/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+# source /home/joe/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
